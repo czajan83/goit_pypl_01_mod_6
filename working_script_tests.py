@@ -292,3 +292,21 @@ def test_if_nested_files_are_properly_classified_and_if_proper_folders_are_ignor
     assert f"new_plik_aaa.aaa" not in files_unknown_format
     assert f"plik_txt_2.txt" in files_documents
 
+
+def test_if_sorted_files_and_empty_folder_are_removed_from_original_places(to_review_folder, sort_folder):
+    shutil.copytree(to_review_folder + f"\\non_empty_folder", sort_folder + f"\\non_empty_folder")
+    shutil.copytree(to_review_folder + f"\\empty_folder", sort_folder + f"\\empty_folder")
+    sort.remove_unnecessary_files_and_folders_from_their_original_place(sort_folder)
+    folders, _ = retrieve_files_and_folders_in_folder(sort_folder)
+    assert f"non_empty_folder" not in folders
+    assert f"empty_folder" not in folders
+
+
+def test_if_normalizing_filenames_works_properly(to_review_folder, sort_folder):
+    sort.normalize(sort_folder)
+    _, files_documents = retrieve_files_and_folders_in_folder(sort_folder + f"\\documents")
+    _, files_unknown_format = retrieve_files_and_folders_in_folder(sort_folder + f"\\unknown_format")
+    assert f"płik_txt.txt" not in files_documents
+    assert f"p_ik_txt.txt" in files_documents
+    assert f"plik_txt.txż" in files_unknown_format
+    assert f"plik_txt.tx_" not in files_unknown_format

@@ -115,3 +115,43 @@ def sort_files(folder):
     unzip_gz_files()
     for sub_folder in sub_folders:
         sort_files(folder + f"\\{sub_folder}")
+
+
+def remove_unnecessary_files_and_folders_from_their_original_place(folder):
+    for element in os.listdir(folder):
+        if os.path.isdir(folder + f"\\{element}"):
+            if element not in ["images", "documents", "audio", "video", "archives", "unknown_format"]:
+                shutil.rmtree(folder + f"\\{element}")
+
+
+def rename_element(element):
+    new_name = f""
+    for letter in element:
+        if not 48 <= ord(letter) <= 57 and \
+                not 65 <= ord(letter) <= 90 and \
+                not 97 <= ord(letter) <= 122 and \
+                not ord(letter) == 95:
+            new_name += f"_"
+        else:
+            new_name += letter
+    return new_name
+
+
+def normalize(folder):
+    for element in os.listdir(folder):
+        if os.path.isdir(folder + f"\\{element}"):
+            normalize(folder + f"\\{element}")
+            new_name = rename_element(element)
+            if element != new_name:
+                os.rename(folder + f"\\{element}", folder + f"\\{new_name}")
+        else:
+            filename = f""
+            element_parts = element.split(".")
+            for i in range(len(element_parts) - 1):
+                filename += element_parts[i] + f"."
+                filename = filename[:-1]
+                extension = element_parts[-1]
+                new_filename = rename_element(filename)
+                if filename != new_filename:
+                    os.rename(folder + f"\\{filename}.{extension}", folder + f"\\{new_filename}.{extension}")
+
