@@ -209,3 +209,24 @@ def test_if_video_folder_exists(to_rev_folder):
 
 def test_if_archives_folder_exists(to_rev_folder):
     assert os.path.isdir(to_rev_folder + f"\\archives")
+
+
+def test_if_images_folder_contains_at_least_one_file(to_rev_folder):
+    assert len(os.listdir(to_rev_folder + f"\\images")) > 0
+
+
+def test_if_documents_folder_contains_at_least_one_file(to_rev_folder):
+    assert len(os.listdir(to_rev_folder + f"\\documents")) > 0
+
+
+def test_if_audio_folder_contains_at_least_one_file(to_rev_folder):
+    assert len(os.listdir(to_rev_folder + f"\\audio")) > 0
+
+
+def test_if_video_folder_contains_at_least_one_file(to_rev_folder):
+    assert len(os.listdir(to_rev_folder + f"\\video")) > 0
+
+
+def test_if_archives_folder_contains_at_least_one_file(to_rev_folder):
+    assert len(os.listdir(to_rev_folder + f"\\archives")) > 0
+
