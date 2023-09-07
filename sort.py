@@ -225,10 +225,13 @@ def print_sorting_log():
 
 
 def main(to_rev_folder):
-    create_folders_for_sorted_content()
-    sort_files(to_rev_folder)
-    normalize(SORTED_PATH)
-    print_sorting_log()
+    if os.path.isdir(to_rev_folder):
+        create_folders_for_sorted_content()
+        sort_files(to_rev_folder)
+        normalize(SORTED_PATH)
+        print_sorting_log()
+    else:
+        print(f"The path {to_rev_folder} does not exist")
 
 
 if __name__ == "__main__":
